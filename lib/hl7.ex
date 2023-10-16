@@ -8,6 +8,13 @@ defmodule HL7 do
 
   @type file_type_hl7 :: :mllp | :line | nil
 
+  import HL7.Query, only: :macros
+
+  @spec foo(HL7.Message.t()) :: String.t() | nil | iodata()
+  def foo(%HL7.Message{} = message) do
+    get_part(message, ~g"PID-3.1")
+  end
+
   @doc """
   Opens an HL7 file stream of either `:mllp`, `:smat` or `:line`. If the file_type is not specified
   it will be inferred from the first three characters of the file contents.
@@ -51,7 +58,7 @@ defmodule HL7 do
     |> case do
       {:ok, file_ref} ->
         first_three = IO.binread(file_ref, 3)
-        File.close(file_ref)
+        _ = File.close(file_ref)
 
         case first_three do
           <<"MSH">> ->

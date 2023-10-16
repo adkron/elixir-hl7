@@ -14,6 +14,9 @@ defmodule HL7.MixProject do
       docs: [
         extras: ["README.md"],
         main: "readme"
+      ],
+      dialyzer: [
+        flags: [:error_handling, :extra_return, :missing_return, :underspecs, :unmatched_returns]
       ]
     ]
   end
@@ -44,7 +47,8 @@ defmodule HL7.MixProject do
       {:dialyxir, "~> 1.1", only: [:dev, :test], runtime: false},
       {:ex_doc, "~> 0.26.0", only: :dev, runtime: false},
       {:junit_formatter, "~> 3.3", only: :test},
-      {:propcheck, "~> 1.4.1", only: [:test, :dev]}
+      {:propcheck, "~> 1.4.1", only: [:test, :dev]},
+      {:nimble_parsec, "~> 1.3.1"},
     ]
   end
 end
